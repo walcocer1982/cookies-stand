@@ -1,0 +1,17 @@
+:root{
+    --font-encabezados:"Righteous", sans-serif;
+    --color-principal:green;
+    --color-secundario:green;
+    --font-texto:Arial, Helvetica, sans-serif;
+}
+
+h1{
+    font-family: var(--font-encabezados);
+    color:var(--color-principal);
+}
+main h2{
+    color:var(--color-secundario);
+}
+main ul li{
+    font-family: var(--font-texto);
+}
