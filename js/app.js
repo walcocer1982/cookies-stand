@@ -1,113 +1,108 @@
 'use strict';
+const horasAtencion = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+const tiendas = [];
+const elementosTabla = document.getElementById("sale-table");
 
-const seattle={
-    location:"seattle",
-    minConsumidoresPorHora:23,
-    maxConsumidorePorHora:65,
-    promedioGalletasPorPersona:6.3,
-    galletasVendidasPorHora:[],
-    vender:function(){
-        this.galletasVendidasPorHora=estimarVentas(this);
-    }
-}
-const tokyo={
-    location:"tokyo",
-    minConsumidoresPorHora:3,
-    maxConsumidorePorHora:24,
-    promedioGalletasPorPersona:1.2,
-    galletasVendidasPorHora:[],
-    vender:function(){
-        this.galletasVendidasPorHora=estimarVentas(this);
-    }
+function Locacion(location, minConsumidoresPorHora, maxConsumidorePorHora, promedioGalletasPorPersona) {
+    this.location = location;
+    this.minConsumidoresPorHora = minConsumidoresPorHora;
+    this.maxConsumidorePorHora = maxConsumidorePorHora;
+    this.promedioGalletasPorPersona = promedioGalletasPorPersona;
+    this.galletasVendidasPorHora = [];
+    this.numeroConsumidorePorHora = [];
+    this.totalGalletasPorDia = 0;
 }
 
-const dubai={
-    location:"dubai",
-    minConsumidoresPorHora:11,
-    maxConsumidorePorHora:38,
-    promedioGalletasPorPersona:3.7,
-    galletasVendidasPorHora:[],
-    vender:function(){
-        this.galletasVendidasPorHora=estimarVentas(this);
-    }
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
-const paris={
-    location:"paris",
-    minConsumidoresPorHora:20,
-    maxConsumidorePorHora:38,
-    promedioGalletasPorPersona:2.3,
-    galletasVendidasPorHora:[],
-    vender:function(){
-        this.galletasVendidasPorHora=estimarVentas(this);
+Locacion.prototype.calcularConsumidoresPorHora = function () {
+    for (let i = 0; i < horasAtencion.length; i++) {
+        this.numeroConsumidorePorHora.push(random(this.minConsumidoresPorHora, this.maxConsumidorePorHora));
+    }
+}
+Locacion.prototype.calcularGalletasPorHora = function () {
+    this.calcularConsumidoresPorHora();
+    for (let i = 0; i < horasAtencion.length; i++) {
+        const ventaPorHora = Math.ceil(this.numeroConsumidorePorHora[i] * this.promedioGalletasPorPersona);
+        this.galletasVendidasPorHora.push(ventaPorHora);
+        this.totalGalletasPorDia += ventaPorHora;
     }
 }
 
-const lima={
-    location:"lima",
-    minConsumidoresPorHora:2,
-    maxConsumidorePorHora:16,
-    promedioGalletasPorPersona:4.6,
-    galletasVendidasPorHora:[],
-    vender:function(){
-        this.galletasVendidasPorHora=estimarVentas(this);
+const seatle = new Locacion("Seatle", 23, 65, 6.3);
+const tokyo = new Locacion("Tokyo", 3, 24, 1.2);
+const dubai = new Locacion("Dubai", 11, 38, 3.7);
+const paris = new Locacion("Paris", 20, 38, 2.3);
+const lima = new Locacion("Lima", 2, 16, 4.6);
+tiendas.push(seatle, tokyo, dubai, paris, lima);
+
+function encabezadoTabla() {
+    const filaTabla = document.createElement('tr');
+    let headertable = document.createElement('th');
+    headertable.textContent = 'location';
+    filaTabla.appendChild(headertable);
+
+    for (let i = 0; i < horasAtencion.length; i++) {
+        headertable = document.createElement('th');
+        headertable.textContent = horasAtencion[i];
+        filaTabla.appendChild(headertable);
     }
+    headertable = document.createElement('th');
+    headertable.textContent = 'total';
+    filaTabla.appendChild(headertable);
+
+    elementosTabla.appendChild(filaTabla);
 }
+Locacion.prototype.mostrarVentas = function () {
+    this.calcularGalletasPorHora();
+    const filaTabla = document.createElement('tr');
+    let dataTable = document.createElement('td');
+    dataTable.textContent = this.location;
+    filaTabla.appendChild(dataTable);
+    for(let i=0; i<horasAtencion.length;i++){
+        dataTable = document.createElement('td');
+        dataTable.textContent = this.galletasVendidasPorHora[i];
+        filaTabla.appendChild(dataTable);
+    }
+    let totalDataTable = document.createElement('th')
+    totalDataTable.textContent = this.totalGalletasPorDia;
+    filaTabla.appendChild(totalDataTable);
+    elementosTabla.appendChild(filaTabla);
 
-
-const horasAtencion=['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
-const tiendas=[seattle,tokyo,dubai,paris,lima];
-
-function random(min,max){
-    return Math.floor(Math.random()*(max-min)+min);
 }
-
-function estimarVentas(tienda){
-    const sale=[];
+function footerTable(){
+    const filaTabla= document.createElement('tr');
+    let pieTabla = document.createElement('th');
+    pieTabla.textContent = 'total';
+    filaTabla.appendChild(pieTabla);
+    let totalDeTotales=0;
     for(let i=0;i<horasAtencion.length;i++){
-        const numeroConsumidores=random(tienda.minConsumidoresPorHora,tienda.maxConsumidorePorHora);
-        const ventaPorHora=Math.ceil(numeroConsumidores*tienda.promedioGalletasPorPersona);
-        sale.push(ventaPorHora);
-        console.log(sale);
+        let totalPorHora=0;
+        for(let j=0; j<tiendas.length;j++){
+            totalPorHora += Number(tiendas[j].galletasVendidasPorHora[i]);
+            totalDeTotales += Number(tiendas[j].galletasVendidasPorHora[i]);
+        }
+        console.log(totalPorHora);
+        pieTabla=document.createElement('th');
+        pieTabla.textContent=totalPorHora;
+        filaTabla.appendChild(pieTabla);
     }
-    return sale;
+    pieTabla=document.createElement('th');
+    pieTabla.textContent=totalDeTotales;
+    filaTabla.appendChild(pieTabla);
+    elementosTabla.appendChild(filaTabla);
+
 }
-
-function mostrarVentas(tienda){
-    let totalGalletasDelDia=0
-    const root=document.getElementById('root');
-
-    const location=document.createElement('section');
-    location.classList.add('location');
-    root.appendChild(location);
-
-    const title=document.createElement('h2');
-    title.textContent=tienda.location;
-    location.appendChild(title);
-
-    const lista=document.createElement('ul');
-    location.appendChild(lista);
-
-    for(let i=0;i<horasAtencion.length;i++){
-        
-        const listItem=document.createElement('li');
-        listItem.textContent=horasAtencion[i]+':'+tienda.galletasVendidasPorHora[i]+'galletas';
-        lista.appendChild(listItem);
-        totalGalletasDelDia += tienda.galletasVendidasPorHora[i];
+function ejecutarTabla(){
+    encabezadoTabla();
+    for(let i=0; i<tiendas.length;i++){
+        tiendas[i].mostrarVentas();
     }
-    const ventaTotal=document.createElement('li');
-    ventaTotal.textContent='total de galletas del dia:'+totalGalletasDelDia + 'galletas';
-    lista.appendChild(ventaTotal);
+    footerTable();
 }
-
-function correModelo(){
-    for(let i=0;i<tiendas.length;i++){
-        tiendas[i].vender();
-        mostrarVentas(tiendas[i]);
-    }
-}
-
-correModelo();
+ejecutarTabla();
 
 /*
 Math.ceil-redondea hacia arriba
