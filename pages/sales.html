@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cookie stand</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <header>
-        <h1>Welcome to Pat's Salmon Cookie</h1>
-        <nav>
-            <a href="./index.html">Home </a>
-            <a href="./pages/sales.html"> sales Data</a>
-        </nav>
+        <div class="titulo">
+            <h1>Welcome to Pat's Salmon Cookies</h1>
+        </div>
+        <div class="paginas">
+            <nav>
+                <a href="../index.html">Home </a>
+                <a href="./sales.html"> Sales Data</a>
+            </nav>
+        </div>
     </header>
     <main>
         <section>
-            <table id="sale-table">
-            
-            </table>
+            <form id="add-location">
+                <fieldset>
+                    <legend>Agrega una nueva tienda</legend>
+
+                    <label for="location">Ingrese la tienda: </label>
+                    <input id="location" type="text" placeholder="Ingresa la tienda"></input>
+
+                    <label for="minConsumidores">Mínimo de consumidores</label>
+                    <input id="minConsumidores" type="number" placeholder="Ingrese el mínimo de consumidores"></input>
+
+                    <label for="maxConsumidores">Máximo de consumidores</label>
+                    <input id="maxConsumidores" type="number" placeholder="Ingrese el máximo de consumidores"></input>
+
+                    <label for="promGalletas">Promedio de galletas por cliente</label>
+                    <input id="promGalletas" type="float" placeholder="Ingrese el promedio por cliente"></input>
+
+                    <button type="submit">Agregar tienda</button>
+                </fieldset>
+            </form>
+            <table id="sale-table"></table>
         </section>
     </main>
     <footer> 2023 Salmon cookie</footer>
     <script src="../js/app.js"></script>
 </body>
+
 </html>

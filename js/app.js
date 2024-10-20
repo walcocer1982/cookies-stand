@@ -2,6 +2,9 @@
 const horasAtencion = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 const tiendas = [];
 const elementosTabla = document.getElementById("sale-table");
+const formElement = document.getElementById("add-location");
+
+const footerTabla = document.createElement('tfoot');
 
 function Locacion(location, minConsumidoresPorHora, maxConsumidorePorHora, promedioGalletasPorPersona) {
     this.location = location;
@@ -61,7 +64,7 @@ Locacion.prototype.mostrarVentas = function () {
     let dataTable = document.createElement('td');
     dataTable.textContent = this.location;
     filaTabla.appendChild(dataTable);
-    for(let i=0; i<horasAtencion.length;i++){
+    for (let i = 0; i < horasAtencion.length; i++) {
         dataTable = document.createElement('td');
         dataTable.textContent = this.galletasVendidasPorHora[i];
         filaTabla.appendChild(dataTable);
@@ -72,41 +75,63 @@ Locacion.prototype.mostrarVentas = function () {
     elementosTabla.appendChild(filaTabla);
 
 }
-function footerTable(){
-    const filaTabla= document.createElement('tr');
+function footerTable() {
+    const filaTabla = document.createElement('tr');
     let pieTabla = document.createElement('th');
     pieTabla.textContent = 'total';
     filaTabla.appendChild(pieTabla);
-    let totalDeTotales=0;
-    for(let i=0;i<horasAtencion.length;i++){
-        let totalPorHora=0;
-        for(let j=0; j<tiendas.length;j++){
+    let totalDeTotales = 0;
+    for (let i = 0; i < horasAtencion.length; i++) {
+        let totalPorHora = 0;
+        for (let j = 0; j < tiendas.length; j++) {
             totalPorHora += Number(tiendas[j].galletasVendidasPorHora[i]);
             totalDeTotales += Number(tiendas[j].galletasVendidasPorHora[i]);
         }
         console.log(totalPorHora);
-        pieTabla=document.createElement('th');
-        pieTabla.textContent=totalPorHora;
+        pieTabla = document.createElement('th');
+        pieTabla.textContent = totalPorHora;
         filaTabla.appendChild(pieTabla);
     }
-    pieTabla=document.createElement('th');
-    pieTabla.textContent=totalDeTotales;
+    pieTabla = document.createElement('th');
+    pieTabla.textContent = totalDeTotales;
     filaTabla.appendChild(pieTabla);
-    elementosTabla.appendChild(filaTabla);
+    footerTabla.appendChild(filaTabla);
+    elementosTabla.appendChild(footerTabla);
 
 }
-function ejecutarTabla(){
+function handleFrom(e) {
+    e.preventDefault();
+
+    const loc = e.target.location.value;
+    const min = parseInt(e.target.minConsumidores.value);
+    const max = parseInt(e.target.maxConsumidores.value);
+    const prom = parseFloat(e.target.promGalletas.value);
+    console.log(e);
+    console.log(loc);
+    console.log(min);
+    console.log(max);
+    console.log(prom);
+    const newTienda = new Locacion(loc, min, max, prom);
+    tiendas.push(newTienda);
+    console.log(tiendas);
+
+    e.target.location.value = null;
+    e.target.minConsumidores.value = null;
+    e.target.maxConsumidores.value = null;
+    e.target.promGalletas.value = null;
+
+    footerTabla.innerHTML = '';
+    newTienda.mostrarVentas();
+    footerTable();
+
+}
+
+function ejecutarTabla() {
     encabezadoTabla();
-    for(let i=0; i<tiendas.length;i++){
+    for (let i = 0; i < tiendas.length; i++) {
         tiendas[i].mostrarVentas();
     }
     footerTable();
 }
 ejecutarTabla();
-
-/*
-Math.ceil-redondea hacia arriba
-Math.floor-redondea hacia abajo
-como se calcula las ventas por hora
-(numeroClientes/hora)*(galletascompran/persona)=galletasCompradas/hora
-*/
+formElement.addEventListener('submit', handleFrom);
