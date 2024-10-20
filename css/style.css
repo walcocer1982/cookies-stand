@@ -1,17 +1,171 @@
-:root{
-    --font-encabezados:"Righteous", sans-serif;
-    --color-principal:green;
-    --color-secundario:green;
-    --font-texto:Arial, Helvetica, sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
 }
 
-h1{
-    font-family: var(--font-encabezados);
-    color:var(--color-principal);
+body {
+    font-family: 'Roboto-Mono', monospace;
+    background-color: #fff;
+    color: #333;
 }
-main h2{
-    color:var(--color-secundario);
+
+header {
+    display: flex;
+    flex-direction: column;
+    background-color: #000000;
+    padding: 10px 0;
+
 }
-main ul li{
-    font-family: var(--font-texto);
+
+.titulo h1 {
+    margin: 0;
+    padding: 20px;
+    color: salmon;
+    font-size: 60px;
+    text-align: center;
+    font-style: italic;
+    font-family: 'Roboto-Mono', monospace;
+    font-weight: 1000;
+
+}
+
+.paginas {
+    background-color: salmon;
+    display: flex;
+    justify-content: left;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+nav a {
+    padding: 10px 10px;
+}
+
+main {
+    text-align: center;
+}
+
+img {
+    background-color: white;
+    border-radius: 10px;
+    height: 300px;
+    border: solid white 8px;
+    margin: auto;
+    box-sizing: border-box;
+    padding-bottom: 20px;
+}
+
+#sucursales {
+    margin: 0 auto;
+    width: 90%;
+}
+
+h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+section {
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+footer {
+    background-color: grey;
+    color: black;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+#standsTable,
+td,
+th {
+    border: solid black 2px;
+    /*font-size:100;*/
+    margin: 0;
+    border-collapse: collapse;
+    padding: 7px;
+    color: #cac9c7;
+}
+
+
+#standsTable {
+    margin-top: 20px;
+    background-color: #2a2b26;
+}
+
+td {
+    border: solid black 2px;
+    margin: 0;
+    width: auto;
+}
+
+th {
+    border: solid black 2px;
+    margin: 0;
+}
+
+tr:hover {
+    background-color: black;
+    /*color: white;*/
+}
+
+legend {
+
+    border-radius: 15px;
+    color: salmon;
+    padding: 20px 10px;
+    font-size: 100%;
+    font-weight: bold;
+
+}
+
+form {
+    padding: 10px 10px;
+    box-sizing: border-box;
+    margin: 0 auto 20px auto;
+}
+
+fieldset {
+    background-color: #ffffff;
+    color: #000000;
+    border: solid black 1px;
+    display: flex;
+    padding: 10px 10px;
+    justify-content:center;
+}
+
+label {
+    padding: 10px 10px;
+    font-size: 12px;
+}
+
+button {
+    padding: 10px 5px;
+    font-size: 12px;
+    margin:auto;
+}
+
+input {
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    font-weight:100;
+    background-color: #ffffff;
+}
+
+table {
+    width: 100%;
 }
